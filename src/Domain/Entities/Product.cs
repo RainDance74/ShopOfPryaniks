@@ -1,4 +1,6 @@
-﻿using ShopOfPryaniks.Domain.Common;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+using ShopOfPryaniks.Domain.Common;
 
 namespace ShopOfPryaniks.Domain.Entities;
 
@@ -19,6 +21,8 @@ public class Product : BaseEntity
         get => _discount;
         set => _discount = Math.Clamp(value, 0, 100);
     }
+
+    [NotMapped]
     public decimal PriceTotal
     {
         get
