@@ -2,16 +2,17 @@
 
 using Microsoft.EntityFrameworkCore;
 
-using ShopOfPryaniks.Persistence.Entities;
+using ShopOfPryaniks.Domain.Common;
+using ShopOfPryaniks.Domain.Entities;
 
 namespace ShopOfPryaniks.Persistence.Data;
 
 public class PryanikiDbContext(DbContextOptions options) : DbContext(options)
 {
-    public DbSet<ProductEntity> Products => Set<ProductEntity>();
-    public DbSet<CartEntity> Carts => Set<CartEntity>();
-    public DbSet<PositionEntity> Positions => Set<PositionEntity>();
-    public DbSet<OrderEntity> Orders => Set<OrderEntity>();
+    public DbSet<Product> Products => Set<Product>();
+    public DbSet<Cart> Carts => Set<Cart>();
+    public DbSet<BasePosition> Positions => Set<BasePosition>();
+    public DbSet<Order> Orders => Set<Order>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
