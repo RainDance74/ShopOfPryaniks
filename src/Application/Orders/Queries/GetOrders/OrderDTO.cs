@@ -1,4 +1,6 @@
-﻿using ShopOfPryaniks.Domain.Entities;
+﻿using AutoMapper;
+
+using ShopOfPryaniks.Domain.Entities;
 
 namespace ShopOfPryaniks.Application.Orders.Queries.GetOrders;
 
@@ -9,4 +11,12 @@ public class OrderDTO
     public List<OrderPositionDTO> Positions { get; init; } = [];
     public OrderStatus Status { get; init; }
     public decimal PriceTotal { get; init; }
+
+    private class Mapping : Profile
+    {
+        public Mapping()
+        {
+            CreateMap<Order, OrderDTO>();
+        }
+    }
 }
