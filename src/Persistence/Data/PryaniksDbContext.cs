@@ -2,12 +2,13 @@
 
 using Microsoft.EntityFrameworkCore;
 
+using ShopOfPryaniks.Application.Common.Interfaces;
 using ShopOfPryaniks.Domain.Common;
 using ShopOfPryaniks.Domain.Entities;
 
 namespace ShopOfPryaniks.Persistence.Data;
 
-public class PryanikiDbContext(DbContextOptions options) : DbContext(options)
+public class PryanikiDbContext(DbContextOptions options) : DbContext(options), IPryanikiDbContext
 {
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Cart> Carts => Set<Cart>();
