@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
+using ShopOfPryaniks.Application.Common.Interfaces;
 using ShopOfPryaniks.Persistence.Data;
 
 namespace ShopOfPryaniks.Persistence;
@@ -13,6 +14,8 @@ public static class DependencyInjection
         {
             options.UseInMemoryDatabase("Pryaniki");
         });
+
+        services.AddScoped<IPryanikiDbContext>(provider => provider.GetRequiredService<PryanikiDbContext>());
 
         return services;
     }
