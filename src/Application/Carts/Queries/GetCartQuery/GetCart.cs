@@ -2,6 +2,8 @@
 
 using MediatR;
 
+using Microsoft.EntityFrameworkCore;
+
 using ShopOfPryaniks.Application.Common.Interfaces;
 
 namespace ShopOfPryaniks.Application.Carts.Queries.GetCartQuery;
@@ -18,7 +20,10 @@ public class GetCartQueryHandler(
     {
         return new CartVM
         {
-
+            Cart = _mapper.Map<CartDTO>(
+                await _context.Carts
+                // Find first of default by owner Id
+                .FirstOrDefaultAsync(cancellationToken))
         };
     }
 }

@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 using MediatR;
+
+using Microsoft.EntityFrameworkCore;
 
 using ShopOfPryaniks.Application.Common.Interfaces;
 
@@ -19,7 +22,9 @@ public class GetProductsQueryHandler(
     {
         return new ProductsVM
         {
-
+            Products = await _context.Products
+                .ProjectTo<ProductDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken)
         };
     }
 }

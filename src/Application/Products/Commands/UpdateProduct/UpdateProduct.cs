@@ -1,6 +1,8 @@
 ﻿using MediatR;
 
+using ShopOfPryaniks.Application.Common.Exceptions;
 using ShopOfPryaniks.Application.Common.Interfaces;
+using ShopOfPryaniks.Domain.Entities;
 
 namespace ShopOfPryaniks.Application.Products.Commands.UpdateProduct;
 
@@ -20,5 +22,18 @@ public class UpdateProductCommandHandler(
 {
     private readonly IPryanikiDbContext _context = context;
 
-    public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+    {
+        Product entity = await _context.Products
+            .FindAsync([ request.Id ], cancellationToken)
+            ?? throw new EntityNotFoundException("There is no entity with this Id in the database.");
+
+        entity.Name = request.Name;
+        entity.Description = request.Description;
+        entity.Amount = request.Amount;
+        entity.Price = request.Price;
+        entity.Discount = request.Discount;
+
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }
