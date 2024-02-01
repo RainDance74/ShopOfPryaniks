@@ -1,6 +1,6 @@
 ﻿namespace ShopOfPryaniks.Domain.Common;
 
-public class BaseEntity
+public abstract class BaseEntity
 {
-    public int Id { get; }
+    public virtual int Id { get; }
 }
