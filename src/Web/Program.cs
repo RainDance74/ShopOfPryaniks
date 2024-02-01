@@ -24,9 +24,13 @@ if(app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-
 app.MapControllers();
+
+app.MapGroup("/api/Users")
+   .WithTags("Users")
+   .MapIdentityApi<ApplicationUser>();
 
 app.Run();
