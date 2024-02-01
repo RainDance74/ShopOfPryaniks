@@ -17,6 +17,8 @@ public static class DependencyInjection
 
         services.AddScoped<IPryanikiDbContext>(provider => provider.GetRequiredService<PryanikiDbContext>());
 
+        services.AddScoped<PryanikiDbContextInitialiser>();
+
         return services;
     }
 }
