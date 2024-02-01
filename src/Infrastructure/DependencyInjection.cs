@@ -33,6 +33,8 @@ public static class DependencyInjection
         services.AddAuthentication()
             .AddIdentityServerJwt();
 
+        services.AddScoped<ApplicationDbContextInitialiser>();
+
         return services;
     }
 }

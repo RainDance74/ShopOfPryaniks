@@ -1,5 +1,6 @@
 using ShopOfPryaniks.Application;
 using ShopOfPryaniks.Infrastructure;
+using ShopOfPryaniks.Infrastructure.Identity;
 using ShopOfPryaniks.Persistence;
 using ShopOfPryaniks.Persistence.Data;
 using ShopOfPryaniks.Web;
@@ -17,6 +18,7 @@ WebApplication app = builder.Build();
 // Configure the HTTP request pipeline.
 if(app.Environment.IsDevelopment())
 {
+    await app.InitialiseIdentityDatabaseAsync();
     await app.InitialiseDatabaseAsync();
     app.UseSwagger();
     app.UseSwaggerUI();
