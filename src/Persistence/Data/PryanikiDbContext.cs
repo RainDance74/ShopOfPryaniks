@@ -14,6 +14,8 @@ public class PryanikiDbContext(DbContextOptions options) : DbContext(options), I
     public DbSet<Cart> Carts => Set<Cart>();
     public DbSet<BasePosition> Positions => Set<BasePosition>();
     public DbSet<Order> Orders => Set<Order>();
+    public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<Employee> Employees => Set<Employee>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
