@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-using ShopOfPryaniks.Application.Common.Interfaces;
 using ShopOfPryaniks.Infrastructure.Identity;
 
 namespace ShopOfPryaniks.Infrastructure;
@@ -12,8 +11,6 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IUserManager, UserManagerService>();
-
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         if(string.IsNullOrEmpty(connectionString))
@@ -22,20 +19,36 @@ public static class DependencyInjection
         }
 
         services.AddDbContext<ApplicationDbContext>(options =>
-                options
-                    .UseNpgsql(connectionString)
-                    .UseSnakeCaseNamingConvention());
-
-        services.AddDefaultIdentity<ApplicationUser>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
-
-        services.AddIdentityServer()
-            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-
-        services.AddAuthentication()
-            .AddIdentityServerJwt();
+        {
+            options
+                .UseNpgsql(connectionString)
+                .UseSnakeCaseNamingConvention();
+        });
 
         services.AddScoped<ApplicationDbContextInitialiser>();
+
+        services.AddAuthentication(opt =>
+        {
+            opt.DefaultAuthenticateScheme = IdentityConstants.BearerScheme;
+            opt.DefaultChallengeScheme = IdentityConstants.BearerScheme;
+            opt.DefaultScheme = IdentityConstants.BearerScheme;
+        })
+            .AddBearerToken(IdentityConstants.BearerScheme);
+
+        services.AddAuthorizationBuilder();
+
+        services
+            .AddIdentityCore<ApplicationUser>()
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddApiEndpoints();
+
+        services.Configure<IdentityOptions>(opt =>
+        {
+            opt.Password.RequireDigit = false;
+            opt.Password.RequireUppercase = false;
+            opt.Password.RequireNonAlphanumeric = false;
+        });
 
         return services;
     }
