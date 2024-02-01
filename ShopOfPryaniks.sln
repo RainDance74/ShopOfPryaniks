@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationUnitTests", "tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{FB3A43D6-8FA7-4F06-84EB-1A4920BC70A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj", "{46024E9D-B54E-4307-ADC1-4A9ED8C13610}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "src\Web\Web.csproj", "{46024E9D-B54E-4307-ADC1-4A9ED8C13610}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{ECDA5038-6540-4568-AFD9-08809C5A88A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{46024E9D-B54E-4307-ADC1-4A9ED8C13610}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46024E9D-B54E-4307-ADC1-4A9ED8C13610}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46024E9D-B54E-4307-ADC1-4A9ED8C13610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECDA5038-6540-4568-AFD9-08809C5A88A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECDA5038-6540-4568-AFD9-08809C5A88A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECDA5038-6540-4568-AFD9-08809C5A88A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECDA5038-6540-4568-AFD9-08809C5A88A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{CC28555B-98B4-4927-AF4A-4602127C4834} = {91F94114-D0BC-49C4-B4E5-874824E649DD}
 		{FB3A43D6-8FA7-4F06-84EB-1A4920BC70A9} = {3CC49779-9561-494D-BAA2-9A0EB6629970}
 		{46024E9D-B54E-4307-ADC1-4A9ED8C13610} = {FB3A43D6-8FA7-4F06-84EB-1A4920BC70A9}
+		{ECDA5038-6540-4568-AFD9-08809C5A88A1} = {43F00A2B-E3DF-4A21-8603-3F32C691058B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC33061B-E2DE-42E6-A41E-B6C5F7987D1A}
