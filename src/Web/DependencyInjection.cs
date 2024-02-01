@@ -9,6 +9,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddWebServices(this IServiceCollection services)
     {
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+        services.AddHttpContextAccessor();
 
         services.AddSwaggerGen(option =>
         {
