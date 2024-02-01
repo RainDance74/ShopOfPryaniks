@@ -4,7 +4,7 @@ namespace ShopOfPryaniks.Domain.Entities;
 
 public class Order : BaseEntity
 {
-    public string ClientPhone { get; set; } = default!;
+    public Customer Owner { get; init; } = default!;
     public List<OrderPosition> Positions { get; } = [];
     public OrderStatus Status { get; set; }
     public decimal PriceTotal => Positions

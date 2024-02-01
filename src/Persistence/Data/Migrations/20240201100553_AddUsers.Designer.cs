@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ShopOfPryaniks.Persistence.Data;
@@ -11,9 +12,11 @@ using ShopOfPryaniks.Persistence.Data;
 namespace ShopOfPryaniks.Persistence.Data.Migrations
 {
     [DbContext(typeof(PryanikiDbContext))]
-    partial class PryanikiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240201100553_AddUsers")]
+    partial class AddUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

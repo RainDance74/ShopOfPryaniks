@@ -6,7 +6,7 @@ namespace ShopOfPryaniks.Domain.Entities;
 
 public class Cart : BaseEntity
 {
-    public string ClientPhone { get; set; } = default!;
+    public Customer Owner { get; set; } = default!;
     public List<CartPosition> Positions { get; } = [];
     [NotMapped]
     public List<CartPosition> AvailablePositions
