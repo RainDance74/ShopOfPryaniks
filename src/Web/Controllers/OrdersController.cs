@@ -24,7 +24,7 @@ public class OrdersController(
     [HttpPost]
     public async Task<IResult> Create(ISender sender, [FromBody] CreateOrderCommand command) => Results.Ok(await sender.Send(command));
 
-    [HttpPost("{id:int}")]
+    [HttpPost("cancel/{id:int}")]
     public async Task<IResult> Cancel(ISender sender, int id)
     {
         await sender.Send(new CancelOrderCommand(id));

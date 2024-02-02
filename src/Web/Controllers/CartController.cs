@@ -21,7 +21,7 @@ public class CartController(
     [HttpGet]
     public async Task<IResult> Get(ISender sender) => Results.Ok(await sender.Send(new GetCartQuery()));
 
-    [HttpPost("{positionId:int}")]
+    [HttpPost("editPosition/{positionId:int}")]
     public async Task<IResult> ChangePositionAmount(ISender sender, int positionId, [FromBody] ChangePositionAmountCommand command)
     {
         if(positionId != command.PositionId)
