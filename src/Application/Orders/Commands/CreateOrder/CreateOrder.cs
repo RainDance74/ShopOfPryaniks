@@ -46,6 +46,8 @@ public class CreateOrderCommandHandler(
             })
         );
 
+        orderEntity.CalculatePriceTotal();
+
         // Remove products amount from db:
         IEnumerable<Tuple<Product, int>> products = _context.Products
             .AsEnumerable()

@@ -7,7 +7,10 @@ public class Order : BaseEntity
     public string OwnerId { get; init; } = default!;
     public List<OrderPosition> Positions { get; } = [];
     public OrderStatus Status { get; set; }
-    public decimal PriceTotal => Positions
+    public decimal PriceTotal { get; set; }
+
+    public decimal CalculatePriceTotal() =>
+        PriceTotal = Positions
         .Sum(p => p.Amount * p.Product.PriceTotal);
 }
 

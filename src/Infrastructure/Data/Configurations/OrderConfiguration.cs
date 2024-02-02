@@ -6,5 +6,10 @@ using ShopOfPryaniks.Domain.Entities;
 namespace ShopOfPryaniks.Infrastructure.Data.Configurations;
 public class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
-    public void Configure(EntityTypeBuilder<Order> builder) => builder.ConfigureBase();
+    public void Configure(EntityTypeBuilder<Order> builder)
+    {
+        builder.Property(o => o.PriceTotal);
+
+        builder.ConfigureBase();
+    }
 }
