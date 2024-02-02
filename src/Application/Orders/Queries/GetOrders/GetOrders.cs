@@ -9,20 +9,24 @@ using ShopOfPryaniks.Application.Common.Interfaces;
 
 namespace ShopOfPryaniks.Application.Orders.Queries.GetOrders;
 
-public record GetOrdersQuery : IRequest<OrdersVM>;
+public record GetOrders : IRequest<OrdersVM>;
 
 public class GetOrdersQueryHandler(
-    IApplicationDbContext context, IMapper mapper)
-    : IRequestHandler<GetOrdersQuery, OrdersVM>
+    IApplicationDbContext context,
+    IMapper mapper,
+    ICurrentUserService currentUserService)
+    : IRequestHandler<GetOrders, OrdersVM>
 {
     private readonly IApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
+    private readonly ICurrentUserService _currentUserService = currentUserService;
 
-    public async Task<OrdersVM> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
+    public async Task<OrdersVM> Handle(GetOrders request, CancellationToken cancellationToken)
     {
         return new OrdersVM
         {
             Orders = await _context.Orders
+                .Where(o => o.OwnerId == _currentUserService.UserId)
                 .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken)
         };

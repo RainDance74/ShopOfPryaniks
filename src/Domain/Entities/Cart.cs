@@ -20,4 +20,6 @@ public class Cart : BaseEntity
         .Sum(p => p.AvailableAmount * p.Product.PriceTotal);
     [NotMapped]
     public bool IsAvailable => AvailablePositions.Count != 0;
+
+    public void Clean() => Positions.Clear();
 }

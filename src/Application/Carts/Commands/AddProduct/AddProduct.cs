@@ -1,5 +1,7 @@
 ﻿using MediatR;
 
+using Microsoft.EntityFrameworkCore;
+
 using ShopOfPryaniks.Application.Common.Exceptions;
 using ShopOfPryaniks.Application.Common.Interfaces;
 using ShopOfPryaniks.Domain.Entities;
@@ -9,17 +11,20 @@ namespace ShopOfPryaniks.Application.Carts.Commands.AddProduct;
 public record AddProductCommand(int ProductId, int Amount) : IRequest;
 
 public class AddProductCommandHandler(
-    IApplicationDbContext context)
+    IApplicationDbContext context,
+    ICurrentUserService currentUserService)
     : IRequestHandler<AddProductCommand>
 {
     private readonly IApplicationDbContext _context = context;
+    private readonly ICurrentUserService _currentUserService = currentUserService;
 
     public async Task Handle(AddProductCommand request, CancellationToken cancellationToken)
     {
         var cartWasCreated = false;
 
         Cart? cartEntity = await _context.Carts
-            .FindAsync([ 1 ], cancellationToken); // TODO: Change 1 to current user id
+            .Where(c => c.OwnerId == _currentUserService.UserId)
+            .SingleOrDefaultAsync(cancellationToken);
 
         if(cartEntity == null)
         {
@@ -34,6 +39,7 @@ public class AddProductCommandHandler(
 
         if(cartWasCreated)
         {
+            cartEntity.OwnerId = _currentUserService.UserId!;
             await _context.Carts.AddAsync(cartEntity, cancellationToken);
         }
 

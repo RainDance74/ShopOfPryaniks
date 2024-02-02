@@ -1,5 +1,7 @@
 ﻿using MediatR;
 
+using Microsoft.EntityFrameworkCore;
+
 using ShopOfPryaniks.Application.Common.Exceptions;
 using ShopOfPryaniks.Application.Common.Interfaces;
 using ShopOfPryaniks.Domain.Entities;
@@ -9,15 +11,18 @@ namespace ShopOfPryaniks.Application.Carts.Commands.RemovePosition;
 public record RemovePositionCommand(int PositionId) : IRequest;
 
 public class RemovePositionCommandHandler(
-    IApplicationDbContext context)
+    IApplicationDbContext context,
+    ICurrentUserService currentUserService)
     : IRequestHandler<RemovePositionCommand>
 {
     private readonly IApplicationDbContext _context = context;
+    private readonly ICurrentUserService _currentUserService = currentUserService;
 
     public async Task Handle(RemovePositionCommand request, CancellationToken cancellationToken)
     {
         Cart cartEntity = await _context.Carts
-            .FindAsync([ 1 ], cancellationToken) // TODO: Change 1 to current user id
+            .Where(c => c.OwnerId == _currentUserService.UserId)
+            .SingleOrDefaultAsync(cancellationToken)
             ?? throw new EntityNotFoundException("There is no cart entity with this Id in the database.");
 
         CartPosition targetPosition = cartEntity.Positions

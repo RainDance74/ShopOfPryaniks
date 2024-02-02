@@ -17,7 +17,7 @@ public class OrdersController(
     private readonly IMediator _mediator = mediator;
 
     [HttpGet]
-    public async Task<IResult> Get(ISender sender) => Results.Ok(await sender.Send(new GetOrdersQuery()));
+    public async Task<IResult> Get(ISender sender) => Results.Ok(await sender.Send(new GetOrders()));
 
     [HttpPost]
     public async Task<IResult> Create(ISender sender, [FromBody] CreateOrderCommand command) => Results.Ok(await sender.Send(command));

@@ -10,11 +10,14 @@ namespace ShopOfPryaniks.Application.Carts.Queries.GetCartQuery;
 public record GetCartQuery : IRequest<CartVM>;
 
 public class GetCartQueryHandler(
-    IApplicationDbContext context, IMapper mapper)
+    IApplicationDbContext context,
+    IMapper mapper,
+    ICurrentUserService currentUserService)
     : IRequestHandler<GetCartQuery, CartVM>
 {
     private readonly IApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
+    private readonly ICurrentUserService _currentUserService = currentUserService;
 
     public async Task<CartVM> Handle(GetCartQuery request, CancellationToken cancellationToken)
     {
@@ -22,8 +25,7 @@ public class GetCartQueryHandler(
         {
             Cart = _mapper.Map<CartDTO>(
                 await _context.Carts
-                // Find first of default by owner Id
-                .FirstOrDefaultAsync(cancellationToken))
+                .FirstOrDefaultAsync(c => c.OwnerId == _currentUserService.UserId, cancellationToken))
         };
     }
 }
