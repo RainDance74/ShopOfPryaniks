@@ -30,10 +30,7 @@ public class MappingTests
     public void ShouldMapOrderWithOrderPositionToOrderDTOWithPositionDTO()
     {
         // Arrange
-        var order = new Order
-        {
-            ClientPhone = "88005553535"
-        };
+        var order = new Order();
         var orderProduct = new Product { Amount = 1, Name = "Pryanik" };
         var orderPosition = new OrderPosition { Product = orderProduct };
         order.Positions.Add(orderPosition);
@@ -44,7 +41,6 @@ public class MappingTests
         // Assert
         Assert.Multiple(() =>
         {
-            Assert.That(orderEntity.ClientPhone, Is.EqualTo(order.ClientPhone));
             Assert.That(orderEntity.Positions.First().Product.Amount, Is.EqualTo(orderProduct.Amount));
             Assert.That(orderEntity.Positions.First().Product.Name, Is.EqualTo(orderProduct.Name));
         });
@@ -54,10 +50,7 @@ public class MappingTests
     public void ShouldMapCartWithCartPositionToCartEntityWithPositionEntity()
     {
         // Arrange
-        var cart = new Cart
-        {
-            ClientPhone = "88005553535"
-        };
+        var cart = new Cart();
         var cartProduct = new Product { Amount = 1, Name = "Pryanik" };
         var cartPosition = new CartPosition { Product = cartProduct };
         cart.Positions.Add(cartPosition);
@@ -68,7 +61,6 @@ public class MappingTests
         // Assert
         Assert.Multiple(() =>
         {
-            Assert.That(cartEntity.ClientPhone, Is.EqualTo(cart.ClientPhone));
             Assert.That(cartEntity.Positions.First().Product.Amount, Is.EqualTo(cartProduct.Amount));
             Assert.That(cartEntity.Positions.First().Product.Name, Is.EqualTo(cartProduct.Name));
         });
