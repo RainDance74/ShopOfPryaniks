@@ -9,10 +9,10 @@ namespace ShopOfPryaniks.Application.Carts.Commands.AddProduct;
 public record AddProductCommand(int ProductId, int Amount) : IRequest;
 
 public class AddProductCommandHandler(
-    IPryanikiDbContext context)
+    IApplicationDbContext context)
     : IRequestHandler<AddProductCommand>
 {
-    private readonly IPryanikiDbContext _context = context;
+    private readonly IApplicationDbContext _context = context;
 
     public async Task Handle(AddProductCommand request, CancellationToken cancellationToken)
     {

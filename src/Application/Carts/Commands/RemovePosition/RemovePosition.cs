@@ -9,10 +9,10 @@ namespace ShopOfPryaniks.Application.Carts.Commands.RemovePosition;
 public record RemovePositionCommand(int PositionId) : IRequest;
 
 public class RemovePositionCommandHandler(
-    IPryanikiDbContext context)
+    IApplicationDbContext context)
     : IRequestHandler<RemovePositionCommand>
 {
-    private readonly IPryanikiDbContext _context = context;
+    private readonly IApplicationDbContext _context = context;
 
     public async Task Handle(RemovePositionCommand request, CancellationToken cancellationToken)
     {

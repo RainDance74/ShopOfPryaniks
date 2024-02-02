@@ -5,7 +5,7 @@ using ShopOfPryaniks.Domain.Entities;
 
 namespace ShopOfPryaniks.Application.Common.Interfaces;
 
-public interface IPryanikiDbContext
+public interface IApplicationDbContext
 {
     DbSet<Product> Products { get; }
     DbSet<Cart> Carts { get; }

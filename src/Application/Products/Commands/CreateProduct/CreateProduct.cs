@@ -15,10 +15,10 @@ public record CreateProductCommand : IRequest<int>
 }
 
 public class CreateProductCommandHandler(
-    IPryanikiDbContext context)
+    IApplicationDbContext context)
     : IRequestHandler<CreateProductCommand, int>
 {
-    private readonly IPryanikiDbContext _context = context;
+    private readonly IApplicationDbContext _context = context;
 
     public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {

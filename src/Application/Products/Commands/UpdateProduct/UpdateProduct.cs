@@ -17,10 +17,10 @@ public record UpdateProductCommand : IRequest
 }
 
 public class UpdateProductCommandHandler(
-    IPryanikiDbContext context)
+    IApplicationDbContext context)
     : IRequestHandler<UpdateProductCommand>
 {
-    private readonly IPryanikiDbContext _context = context;
+    private readonly IApplicationDbContext _context = context;
 
     public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {

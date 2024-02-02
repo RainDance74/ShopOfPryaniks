@@ -12,10 +12,10 @@ namespace ShopOfPryaniks.Application.Orders.Queries.GetOrders;
 public record GetOrdersQuery : IRequest<OrdersVM>;
 
 public class GetOrdersQueryHandler(
-    IPryanikiDbContext context, IMapper mapper)
+    IApplicationDbContext context, IMapper mapper)
     : IRequestHandler<GetOrdersQuery, OrdersVM>
 {
-    private readonly IPryanikiDbContext _context = context;
+    private readonly IApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
 
     public async Task<OrdersVM> Handle(GetOrdersQuery request, CancellationToken cancellationToken)

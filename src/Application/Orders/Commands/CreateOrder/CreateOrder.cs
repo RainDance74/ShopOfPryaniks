@@ -8,10 +8,10 @@ namespace ShopOfPryaniks.Application.Orders.Commands.CreateOrder;
 public record CreateOrderCommand : IRequest<int>;
 
 public class CreateOrderCommandHandler(
-    IPryanikiDbContext context)
+    IApplicationDbContext context)
     : IRequestHandler<CreateOrderCommand, int>
 {
-    private readonly IPryanikiDbContext _context = context;
+    private readonly IApplicationDbContext _context = context;
 
     public async Task<int> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using ShopOfPryaniks.Application.Common.Interfaces;
 using ShopOfPryaniks.Domain.Constants;
+using ShopOfPryaniks.Infrastructure.Data;
 using ShopOfPryaniks.Infrastructure.Identity;
 
 namespace ShopOfPryaniks.Infrastructure;
@@ -26,6 +27,8 @@ public static class DependencyInjection
                 .UseNpgsql(connectionString)
                 .UseSnakeCaseNamingConvention();
         });
+
+        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<ApplicationDbContextInitialiser>();
 

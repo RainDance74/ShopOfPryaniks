@@ -11,10 +11,10 @@ namespace ShopOfPryaniks.Application.Products.Commands.DeleteProduct;
 public record DeleteProductCommand(int Id) : IRequest;
 
 public class DeleteProductCommandHandler(
-    IPryanikiDbContext context)
+    IApplicationDbContext context)
     : IRequestHandler<DeleteProductCommand>
 {
-    private readonly IPryanikiDbContext _context = context;
+    private readonly IApplicationDbContext _context = context;
 
     public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {

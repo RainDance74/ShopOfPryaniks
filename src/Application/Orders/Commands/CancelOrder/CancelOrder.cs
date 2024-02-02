@@ -9,9 +9,9 @@ namespace ShopOfPryaniks.Application.Orders.Commands.CancelOrder;
 public record CancelOrderCommand(int Id) : IRequest;
 
 public class CancelOrderCommandHandler(
-    IPryanikiDbContext context) : IRequestHandler<CancelOrderCommand>
+    IApplicationDbContext context) : IRequestHandler<CancelOrderCommand>
 {
-    private readonly IPryanikiDbContext _context = context;
+    private readonly IApplicationDbContext _context = context;
 
     public async Task Handle(CancelOrderCommand request, CancellationToken cancellationToken)
     {
