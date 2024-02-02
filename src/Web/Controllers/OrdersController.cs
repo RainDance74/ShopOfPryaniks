@@ -22,7 +22,7 @@ public class OrdersController(
     public async Task<IResult> Get(ISender sender) => Results.Ok(await sender.Send(new GetOrders()));
 
     [HttpPost]
-    public async Task<IResult> Create(ISender sender, [FromBody] CreateOrderCommand command) => Results.Ok(await sender.Send(command));
+    public async Task<IResult> Create(ISender sender) => Results.Ok(await sender.Send(new CreateOrderCommand()));
 
     [HttpPost("cancel/{id:int}")]
     public async Task<IResult> Cancel(ISender sender, int id)
