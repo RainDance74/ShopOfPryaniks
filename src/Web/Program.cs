@@ -26,6 +26,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseExceptionHandler(opt => { });
+
 app.Map("/", () => Results.Redirect("/api"));
 
 app.MapGroup("/api/Users")

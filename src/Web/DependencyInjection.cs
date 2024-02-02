@@ -1,6 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 
 using ShopOfPryaniks.Application.Common.Interfaces;
+using ShopOfPryaniks.Web.Infrastructure;
 using ShopOfPryaniks.Web.Services;
 
 namespace ShopOfPryaniks.Web;
@@ -12,6 +13,8 @@ public static class DependencyInjection
         services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         services.AddHttpContextAccessor();
+
+        services.AddExceptionHandler<CustomExceptionHandler>();
 
         services.AddSwaggerGen(option =>
         {
