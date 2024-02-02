@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
+using ShopOfPryaniks.Domain.Constants;
 
 namespace ShopOfPryaniks.Infrastructure.Identity;
 
@@ -20,10 +23,15 @@ public static class InitialiserExtensions
 }
 
 public class ApplicationDbContextInitialiser(
-    ILogger<ApplicationDbContextInitialiser> logger, ApplicationDbContext context)
+    ILogger<ApplicationDbContextInitialiser> logger,
+    ApplicationDbContext context,
+    UserManager<ApplicationUser> userManager,
+    RoleManager<IdentityRole> roleManager)
 {
     private readonly ILogger<ApplicationDbContextInitialiser> _logger = logger;
     private readonly ApplicationDbContext _context = context;
+    private readonly UserManager<ApplicationUser> _userManager = userManager;
+    private readonly RoleManager<IdentityRole> _roleManager = roleManager;
 
     public async Task InitialiseAsync()
     {
@@ -53,13 +61,28 @@ public class ApplicationDbContextInitialiser(
 
     public async Task TrySeedAsync()
     {
-        if(!_context.Users.Any())
+        #region Roles and Users initialization
+
+        // Default roles
+        IdentityRole administratorRole = new(Roles.Administrator);
+
+        if(_roleManager.Roles.All(r => r.Name != administratorRole.Name))
         {
-            #region Initialization
-
-            #endregion
-
-            await _context.SaveChangesAsync();
+            await _roleManager.CreateAsync(administratorRole);
         }
+
+        // Default users
+        ApplicationUser administrator = new() { UserName = "admin@localhost", Email = "admin@localhost" };
+
+        if(_userManager.Users.All(u => u.UserName != administrator.UserName))
+        {
+            await _userManager.CreateAsync(administrator, "admin1");
+            if(!string.IsNullOrWhiteSpace(administratorRole.Name))
+            {
+                await _userManager.AddToRolesAsync(administrator, [administratorRole.Name]);
+            }
+        }
+
+        #endregion
     }
 }
