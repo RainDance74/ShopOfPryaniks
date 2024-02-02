@@ -46,6 +46,17 @@ public class CreateOrderCommandHandler(
             })
         );
 
+        // Remove products amount from db:
+        IEnumerable<Tuple<Product, int>> products = _context.Products
+            .AsEnumerable()
+            .Where(product => cartEntity.Positions.Any(position => position.Product.Id == product.Id))
+            .Select(product => new Tuple<Product, int>(product, cartEntity.Positions.First(p => p.Product.Id == product.Id).AvailableAmount));
+
+        foreach(Tuple<Product, int>? product in products)
+        {
+            product.Item1.Amount -= product.Item2;
+        }
+
         _context.Orders.Add(orderEntity);
 
         cartEntity.Clean();
