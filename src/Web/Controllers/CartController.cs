@@ -1,5 +1,6 @@
 ﻿using MediatR;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using ShopOfPryaniks.Application.Carts.Commands.ChangePositionAmount;
@@ -10,6 +11,7 @@ namespace ShopOfPryaniks.Web.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class CartController(
     IMediator mediator)
     : ControllerBase
