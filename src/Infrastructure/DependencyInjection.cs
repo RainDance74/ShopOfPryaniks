@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using ShopOfPryaniks.Application.Common.Interfaces;
+using ShopOfPryaniks.Domain.Constants;
 using ShopOfPryaniks.Infrastructure.Identity;
 
 namespace ShopOfPryaniks.Infrastructure;
@@ -52,6 +53,9 @@ public static class DependencyInjection
             opt.Password.RequireUppercase = false;
             opt.Password.RequireNonAlphanumeric = false;
         });
+
+        services.AddAuthorization(options =>
+            options.AddPolicy(Policies.CanManage, policy => policy.RequireRole(Roles.Administrator)));
 
         return services;
     }
