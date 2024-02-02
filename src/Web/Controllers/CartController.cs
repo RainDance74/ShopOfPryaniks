@@ -23,7 +23,7 @@ public class CartController(
     public async Task<IResult> Get(ISender sender) => Results.Ok(await sender.Send(new GetCartQuery()));
 
     [HttpPost("addProduct/{productId:int}")]
-    public async Task<IResult> ChangePositionAmount(ISender sender, int productId, [FromBody] AddProductCommand command)
+    public async Task<IResult> AddProduct(ISender sender, int productId, [FromBody] AddProductCommand command)
     {
         if(productId != command.ProductId)
         {
