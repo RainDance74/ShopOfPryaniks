@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using ShopOfPryaniks.Application.Common.Interfaces;
 using ShopOfPryaniks.Infrastructure.Identity;
 
 namespace ShopOfPryaniks.Infrastructure;
@@ -42,6 +43,8 @@ public static class DependencyInjection
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddApiEndpoints();
+
+        services.AddTransient<IIdentityService, IdentityService>();
 
         services.Configure<IdentityOptions>(opt =>
         {
