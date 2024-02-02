@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using ShopOfPryaniks.Application.Carts.Commands.AddProduct;
 using ShopOfPryaniks.Application.Carts.Commands.ChangePositionAmount;
 using ShopOfPryaniks.Application.Carts.Commands.RemovePosition;
 using ShopOfPryaniks.Application.Carts.Queries.GetCartQuery;
@@ -20,6 +21,19 @@ public class CartController(
 
     [HttpGet]
     public async Task<IResult> Get(ISender sender) => Results.Ok(await sender.Send(new GetCartQuery()));
+
+    [HttpPost("addProduct/{productId:int}")]
+    public async Task<IResult> ChangePositionAmount(ISender sender, int productId, [FromBody] AddProductCommand command)
+    {
+        if(productId != command.ProductId)
+        {
+            return Results.BadRequest();
+        }
+
+        await sender.Send(command);
+
+        return Results.NoContent();
+    }
 
     [HttpPost("editPosition/{positionId:int}")]
     public async Task<IResult> ChangePositionAmount(ISender sender, int positionId, [FromBody] ChangePositionAmountCommand command)
