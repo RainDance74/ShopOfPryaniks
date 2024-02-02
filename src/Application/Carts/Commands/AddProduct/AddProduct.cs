@@ -23,6 +23,7 @@ public class AddProductCommandHandler(
         var cartWasCreated = false;
 
         Cart? cartEntity = await _context.Carts
+            .Include(c => c.Positions)
             .Where(c => c.OwnerId == _currentUserService.UserId)
             .SingleOrDefaultAsync(cancellationToken);
 

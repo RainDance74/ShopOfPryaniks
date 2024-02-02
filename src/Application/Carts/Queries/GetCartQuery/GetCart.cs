@@ -25,6 +25,8 @@ public class GetCartQueryHandler(
         {
             Cart = _mapper.Map<CartDTO>(
                 await _context.Carts
+                .Include(c => c.Positions)
+                .ThenInclude(p => p.Product)
                 .FirstOrDefaultAsync(c => c.OwnerId == _currentUserService.UserId, cancellationToken))
         };
     }

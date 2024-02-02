@@ -26,6 +26,8 @@ public class GetOrdersQueryHandler(
         return new OrdersVM
         {
             Orders = await _context.Orders
+                .Include(o => o.Positions)
+                .ThenInclude(p => p.Product)
                 .Where(o => o.OwnerId == _currentUserService.UserId)
                 .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken)

@@ -21,6 +21,7 @@ public class ChangePositionAmountCommandHandler(
     public async Task Handle(ChangePositionAmountCommand request, CancellationToken cancellationToken)
     {
         Cart cartEntity = await _context.Carts
+            .Include(c => c.Positions)
             .Where(c => c.OwnerId == _currentUserService.UserId)
             .SingleOrDefaultAsync(cancellationToken)
             ?? throw new EntityNotFoundException("There is no cart entity with this Id in the database.");
