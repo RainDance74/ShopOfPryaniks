@@ -17,7 +17,7 @@ public class Order : BaseEntity
 
     [NotMapped]
     public bool Finished => Status
-        is not OrderStatus.Done
+        is OrderStatus.Done
         or OrderStatus.Canceled
         or OrderStatus.Burned;
 }
