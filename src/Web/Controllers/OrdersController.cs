@@ -31,6 +31,7 @@ public class OrdersController(
 
     [HttpPost("cancel/{id:int}")]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.Forbidden)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<IResult> Cancel(ISender sender, int id)

@@ -27,6 +27,11 @@ public class CancelOrderCommandHandler(
             throw new ForbiddenAccessException();
         }
 
+        if(entity.Finished)
+        {
+            throw new InvalidOperationException("Order status don't need changes.");
+        }
+
         entity.Status = OrderStatus.Canceled;
 
         await _context.SaveChangesAsync(cancellationToken);

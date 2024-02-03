@@ -1,4 +1,6 @@
-﻿using ShopOfPryaniks.Domain.Common;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+using ShopOfPryaniks.Domain.Common;
 
 namespace ShopOfPryaniks.Domain.Entities;
 
@@ -12,6 +14,12 @@ public class Order : BaseEntity
     public decimal CalculatePriceTotal() =>
         PriceTotal = Positions
         .Sum(p => p.Amount * p.Product.PriceTotal);
+
+    [NotMapped]
+    public bool Finished => Status
+        is not OrderStatus.Done
+        or OrderStatus.Canceled
+        or OrderStatus.Burned;
 }
 
 public enum OrderStatus
