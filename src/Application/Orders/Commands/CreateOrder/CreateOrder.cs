@@ -33,7 +33,7 @@ public class CreateOrderCommandHandler(
         var orderEntity = new Order
         {
             OwnerId = _currentUserService.UserId!,
-            Status = OrderStatus.Delivery
+            Status = OrderStatus.Waiting
         };
 
         orderEntity.Positions.AddRange(cartEntity.Positions

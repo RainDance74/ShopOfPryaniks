@@ -25,6 +25,7 @@ public class Order : BaseEntity
 public enum OrderStatus
 {
     Done,
+    Waiting,
     Delivery,
     Canceled,
     Burned
