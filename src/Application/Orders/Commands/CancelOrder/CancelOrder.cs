@@ -1,5 +1,7 @@
 ﻿using MediatR;
 
+using Microsoft.EntityFrameworkCore;
+
 using ShopOfPryaniks.Application.Common.Exceptions;
 using ShopOfPryaniks.Application.Common.Interfaces;
 using ShopOfPryaniks.Domain.Entities;
@@ -19,7 +21,9 @@ public class CancelOrderCommandHandler(
     public async Task Handle(CancelOrderCommand request, CancellationToken cancellationToken)
     {
         Order entity = await _context.Orders
-            .FindAsync([ request.Id ], cancellationToken)
+            .Include(o => o.Positions)
+            .ThenInclude(p => p.Product)
+            .FirstAsync(o => o.Id == request.Id)
             ?? throw new EntityNotFoundException("There is no entity with this Id in the database.");
 
         if(entity.OwnerId != _currentUserService.UserId)
@@ -30,6 +34,15 @@ public class CancelOrderCommandHandler(
         if(entity.Finished)
         {
             throw new InvalidOperationException("Order status don't need changes.");
+        }
+
+        if(entity.Status == OrderStatus.Waiting)
+        {
+            foreach(OrderPosition position in entity.Positions)
+            {
+                Product? productToUpdate = await _context.Products.FindAsync([position.Product.Id], cancellationToken);
+                productToUpdate!.Amount += position.Amount;
+            }
         }
 
         entity.Status = OrderStatus.Canceled;
