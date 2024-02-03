@@ -21,10 +21,33 @@ public class CartController(
 {
     private readonly IMediator _mediator = mediator;
 
+    /// <summary>
+    /// Gets the user cart
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(CartVM))]
     public async Task<IResult> Get(ISender sender) => Results.Ok(await sender.Send(new GetCartQuery()));
 
+    /// <summary>
+    /// Adds a product to user cart
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///     
+    ///     POST /api/Cart/addProduct/1
+    ///     {
+    ///         "productId": 1,
+    ///         "amount": 5
+    ///     }
+    /// 
+    /// </remarks>
+    /// <param name="sender"></param>
+    /// <param name="productId">Product Id to add</param>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    /// <response code="400">If the product Id is not the same for http address and body</response>
+    /// <response code="404">If there is no product with this Id</response>
     [HttpPost("addProduct/{productId:int}")]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -41,6 +64,25 @@ public class CartController(
         return Results.NoContent();
     }
 
+    /// <summary>
+    /// Changes the position amount in user cart
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///     
+    ///     POST /api/Cart/editPosition/1
+    ///     {
+    ///         "positionId": 1,
+    ///         "newAmount": 10
+    ///     }
+    /// 
+    /// </remarks>
+    /// <param name="sender"></param>
+    /// <param name="positionId">Position Id to change</param>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    /// <response code="400">If the position Id is not the same for http address and body</response>
+    /// <response code="404">If there is no position with this Id</response>
     [HttpPost("editPosition/{positionId:int}")]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -57,6 +99,13 @@ public class CartController(
         return Results.NoContent();
     }
 
+    /// <summary>
+    /// Remove position from user cart
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="positionId">Position Id to delete</param>
+    /// <returns></returns>
+    /// <response code="404">If there is no position with this Id</response>
     [HttpDelete("{positionId:int}")]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]

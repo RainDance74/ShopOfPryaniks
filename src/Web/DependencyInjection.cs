@@ -19,6 +19,8 @@ public static class DependencyInjection
         services.AddSwaggerGen(option =>
         {
             option.SwaggerDoc("v1", new OpenApiInfo { Title = "PryaniksShop API", Version = "v1" });
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, "ShopOfPryaniks.Web.xml");
+            option.IncludeXmlComments(xmlPath);
             option.CustomSchemaIds(type => type.ToString());
             option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {

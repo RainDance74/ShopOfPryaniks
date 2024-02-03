@@ -22,15 +22,61 @@ public class ProductsController(
 {
     private readonly IMediator _mediator = mediator;
 
+    /// <summary>
+    /// Gets the list of available products
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     [AllowAnonymous]
     [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProductsVM))]
     public async Task<IResult> Get(ISender sender) => Results.Ok(await sender.Send(new GetProductsQuery()));
 
+    /// <summary>
+    /// Creates a product
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///     
+    ///     POST /api/Products
+    ///     {
+    ///         "name": "Pryanik",
+    ///         "description": "A very tasty pryanik",
+    ///         "amount": 60,
+    ///         "price": 500,
+    ///         "discount": 10
+    ///     }
+    /// 
+    /// </remarks>
+    /// <param name="sender"></param>
+    /// <param name="command">Product to create</param>
+    /// <returns>A newly created Product Id</returns>
     [HttpPost]
     [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(int))]
     public async Task<IResult> Create(ISender sender, [FromBody] CreateProductCommand command) => Results.Ok(await sender.Send(command));
 
+    /// <summary>
+    /// Updates a product
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    ///     
+    ///     PUT /api/Products/1
+    ///     {
+    ///         "id": 1,
+    ///         "name": "Pryanik",
+    ///         "description": "A very tasty pryanik",
+    ///         "amount": 60,
+    ///         "price": 500,
+    ///         "discount": 10
+    ///     }
+    /// 
+    /// </remarks>
+    /// <param name="sender"></param>
+    /// <param name="id">An Id of item to update</param>
+    /// <param name="command">Product to update</param>
+    /// <returns></returns>
+    /// <response code="400">If the product Id is not the same for http address and body</response>
+    /// <response code="404">If there is no product with this Id</response>
     [HttpPut("{id:int}")]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -47,6 +93,13 @@ public class ProductsController(
         return Results.NoContent();
     }
 
+    /// <summary>
+    /// Deletes a product
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="id">An Id of item to delete</param>
+    /// <returns></returns>
+    /// <response code="404">If there is no product with this Id</response>
     [HttpDelete("{id:int}")]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
