@@ -36,11 +36,11 @@ public class CreateOrderCommandHandler(
             Status = OrderStatus.Waiting
         };
 
-        orderEntity.Positions.AddRange(cartEntity.Positions
+        orderEntity.Positions.AddRange(cartEntity.AvailablePositions
             .Select(p => new OrderPosition
             {
                 Product = p.Product,
-                Amount = p.Amount
+                Amount = p.AvailableAmount
             })
         );
 
