@@ -27,7 +27,6 @@ public class OrdersController(
     [HttpPost]
     [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(int))]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-    [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<IResult> Create(ISender sender) => Results.Ok(await sender.Send(new CreateOrderCommand()));
 
     [HttpPost("cancel/{id:int}")]

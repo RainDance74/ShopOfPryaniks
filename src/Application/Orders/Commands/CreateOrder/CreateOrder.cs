@@ -2,7 +2,6 @@
 
 using Microsoft.EntityFrameworkCore;
 
-using ShopOfPryaniks.Application.Common.Exceptions;
 using ShopOfPryaniks.Application.Common.Interfaces;
 using ShopOfPryaniks.Domain.Entities;
 
@@ -20,14 +19,13 @@ public class CreateOrderCommandHandler(
 
     public async Task<int> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        Cart cartEntity = await _context.Carts
+        Cart? cartEntity = await _context.Carts
             .Include(c => c.Positions)
             .ThenInclude(p => p.Product)
             .Where(c => c.OwnerId == _currentUserService.UserId)
-            .SingleOrDefaultAsync(cancellationToken)
-            ?? throw new EntityNotFoundException("There is no cart entity with this Id in the database.");
+            .SingleOrDefaultAsync(cancellationToken);
 
-        if(!cartEntity.IsAvailable)
+        if(cartEntity is null || !cartEntity.IsAvailable)
         {
             throw new InvalidOperationException("There is no any products in the cart.");
         }
