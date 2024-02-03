@@ -29,7 +29,7 @@ public static class DependencyInjection
                 Name = "Authorization",
                 Type = SecuritySchemeType.Http,
                 BearerFormat = "JWT",
-                Scheme = "Bearer"
+                Scheme = "bearer"
             });
             option.AddSecurityRequirement(new OpenApiSecurityRequirement
             {

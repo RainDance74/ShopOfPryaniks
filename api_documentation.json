@@ -1546,7 +1546,7 @@
       "Bearer": {
         "type": "http",
         "description": "Please enter a valid token.",
-        "scheme": "Bearer",
+        "scheme": "bearer",
         "bearerFormat": "JWT"
       }
     }
