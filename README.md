@@ -70,4 +70,4 @@ This API offers the following functionalities:
 11. Check products one more time and notice that the amount did change. ![image](https://github.com/RainDance74/ShopOfPryaniks/assets/104539834/cdce0def-aa1e-4922-88b4-8ed4be1ca6f5)
 12. Check your cart and you'll see that there is nothing in there. ![image](https://github.com/RainDance74/ShopOfPryaniks/assets/104539834/abcc87ce-69db-42fb-a151-5510c5a3c63b)
 
-That's all! If you want to check other possible requests, and see what it is do, [here](https://github.com/RainDance74/ShopOfPryaniks/blob/master/api_documentation.json) is the api documentation.
+That's all! If you want to check other possible requests, and see what it does, [here](https://github.com/RainDance74/ShopOfPryaniks/blob/master/api_documentation.json) is the api documentation.
