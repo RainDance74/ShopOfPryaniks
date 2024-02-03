@@ -9,21 +9,21 @@ using ShopOfPryaniks.Application.Common.Interfaces;
 
 namespace ShopOfPryaniks.Application.Products.Queries.GetProducts;
 
-public record GetProductsQuery : IRequest<ProductsVM>;
+public record GetAvailableProducts : IRequest<ProductsVM>;
 
-public class GetProductsQueryHandler(
+public class GetAvailableProductsQueryHandler(
     IApplicationDbContext context, IMapper mapper)
-    : IRequestHandler<GetProductsQuery, ProductsVM>
+    : IRequestHandler<GetAvailableProducts, ProductsVM>
 {
     private readonly IApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<ProductsVM> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public async Task<ProductsVM> Handle(GetAvailableProducts request, CancellationToken cancellationToken)
     {
         return new ProductsVM
         {
             Products = await _context.Products
-                .Where(p => p.IsAvailable)
+                .Where(p => p.Amount > 0)
                 .ProjectTo<ProductDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken)
         };

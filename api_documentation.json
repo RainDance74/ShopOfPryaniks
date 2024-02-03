@@ -417,7 +417,37 @@
         }
       }
     },
-    "/api/Products": {
+    "/api/Products/all": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Gets the list of all products",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShopOfPryaniks.Application.Products.Queries.GetProducts.ProductsVM"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShopOfPryaniks.Application.Products.Queries.GetProducts.ProductsVM"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShopOfPryaniks.Application.Products.Queries.GetProducts.ProductsVM"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Products/available": {
       "get": {
         "tags": [
           "Products"
@@ -445,7 +475,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/Products": {
       "post": {
         "tags": [
           "Products"
@@ -1536,7 +1568,8 @@
           0,
           1,
           2,
-          3
+          3,
+          4
         ],
         "type": "integer",
         "format": "int32"

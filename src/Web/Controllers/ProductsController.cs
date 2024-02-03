@@ -23,13 +23,21 @@ public class ProductsController(
     private readonly IMediator _mediator = mediator;
 
     /// <summary>
+    /// Gets the list of all products
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("all")]
+    [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProductsVM))]
+    public async Task<IResult> GetAll(ISender sender) => Results.Ok(await sender.Send(new GetAllProducts()));
+
+    /// <summary>
     /// Gets the list of available products
     /// </summary>
     /// <returns></returns>
-    [HttpGet]
+    [HttpGet("available")]
     [AllowAnonymous]
     [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ProductsVM))]
-    public async Task<IResult> Get(ISender sender) => Results.Ok(await sender.Send(new GetProductsQuery()));
+    public async Task<IResult> GetAvailable(ISender sender) => Results.Ok(await sender.Send(new GetAvailableProducts()));
 
     /// <summary>
     /// Creates a product
