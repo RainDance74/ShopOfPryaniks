@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using System.Net;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +22,13 @@ public class CartController(
     private readonly IMediator _mediator = mediator;
 
     [HttpGet]
+    [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(CartVM))]
     public async Task<IResult> Get(ISender sender) => Results.Ok(await sender.Send(new GetCartQuery()));
 
     [HttpPost("addProduct/{productId:int}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<IResult> AddProduct(ISender sender, int productId, [FromBody] AddProductCommand command)
     {
         if(productId != command.ProductId)
@@ -36,6 +42,9 @@ public class CartController(
     }
 
     [HttpPost("editPosition/{positionId:int}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<IResult> ChangePositionAmount(ISender sender, int positionId, [FromBody] ChangePositionAmountCommand command)
     {
         if(positionId != command.PositionId)
@@ -49,6 +58,8 @@ public class CartController(
     }
 
     [HttpDelete("{positionId:int}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<IResult> Cancel(ISender sender, int positionId)
     {
         await sender.Send(new RemovePositionCommand(positionId));

@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using System.Net;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,12 +21,19 @@ public class OrdersController(
     private readonly IMediator _mediator = mediator;
 
     [HttpGet]
+    [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(OrdersVM))]
     public async Task<IResult> Get(ISender sender) => Results.Ok(await sender.Send(new GetOrders()));
 
     [HttpPost]
+    [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(int))]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<IResult> Create(ISender sender) => Results.Ok(await sender.Send(new CreateOrderCommand()));
 
     [HttpPost("cancel/{id:int}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<IResult> Cancel(ISender sender, int id)
     {
         await sender.Send(new CancelOrderCommand(id));
