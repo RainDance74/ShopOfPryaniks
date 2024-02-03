@@ -23,7 +23,7 @@ public static class DependencyInjection
             option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,
-                Description = "Please enter a valid token (Bearer *token*)",
+                Description = "Please enter a valid token.",
                 Name = "Authorization",
                 Type = SecuritySchemeType.Http,
                 BearerFormat = "JWT",
