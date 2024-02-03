@@ -31,4 +31,7 @@ public class Product : BaseEntity
             return Price - sale;
         }
     }
+
+    [NotMapped]
+    public bool IsAvailable => Amount > 0;
 }

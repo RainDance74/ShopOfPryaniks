@@ -23,6 +23,7 @@ public class GetProductsQueryHandler(
         return new ProductsVM
         {
             Products = await _context.Products
+                .Where(p => p.IsAvailable)
                 .ProjectTo<ProductDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken)
         };
